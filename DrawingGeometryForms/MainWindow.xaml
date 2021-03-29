@@ -1,0 +1,36 @@
+﻿<Window x:Class="DrawingGeometryForms.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DrawingGeometryForms"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="497" Width="1079">
+    <Grid Margin="0,0,0,37">
+        <Button x:Name="Enter" Content="Enter" HorizontalAlignment="Left" Height="39" Margin="706,395,0,0" VerticalAlignment="Top" Width="78" Background="#FFFF1111" Click="ClickEnter" Visibility="Visible" FontSize="24" FontFamily="Times New Roman" BorderBrush="#FF0A0A0A" Foreground="White"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="350" Margin="469,15,0,0" VerticalAlignment="Top" Width="552" Background="White" AutomationProperties.IsOffscreenBehavior="Default">
+            <Label Content="height" Height="27" Canvas.Left="-418" Canvas.Top="18" Width="90"/>
+            <TextBox x:Name="inputedHeight" Height="21" Canvas.Left="-323" Canvas.Top="21" TextWrapping="Wrap" Width="106"/>
+            <Button Content="height" Height="22" Canvas.Left="-193" Canvas.Top="21" Width="106" Click="ClickHeight"/>
+            <TextBox x:Name="inputedWidth" Height="21" Canvas.Left="-323" Canvas.Top="53" TextWrapping="Wrap" Width="106"/>
+            <Button Content="width" Height="22" Canvas.Left="-193" Canvas.Top="53" Width="106" Click="ClickWidth"/>
+            <Label Content="width" Height="27" Canvas.Left="-418" Canvas.Top="50" Width="90"/>
+            <TextBox x:Name="inputedCenterX" Height="21" Canvas.Left="-323" Canvas.Top="85" TextWrapping="Wrap" Width="106"/>
+            <Button Content="cenerX" Height="22" Canvas.Left="-193" Canvas.Top="85" Width="106" Click="ClickCenterX"/>
+            <Label Content="centerX" Height="27" Canvas.Left="-418" Canvas.Top="82" Width="90"/>
+            <TextBox x:Name="inputedCenterY" Height="21" Canvas.Left="-323" Canvas.Top="117" TextWrapping="Wrap" Width="106"/>
+            <Button Content="centerY" Height="22" Canvas.Left="-193" Canvas.Top="117" Width="106" Click="ClickCenterY"/>
+            <Label Content="centerY" Height="31" Canvas.Left="-418" Canvas.Top="114" Width="90"/>
+            <TextBox x:Name="inputedLineColor" Height="21" Canvas.Left="-323" Canvas.Top="153" TextWrapping="Wrap" Width="106"/>
+            <Button Content="lineColor" Height="22" Canvas.Left="-193" Canvas.Top="153" Width="106" Click="ClickLineColor"/>
+            <Label Content="lineColor" Height="27" Canvas.Left="-418" Canvas.Top="150" Width="90"/>
+            <TextBox x:Name="inputedLineThiсkness" Height="21" Canvas.Left="-323" Canvas.Top="185" TextWrapping="Wrap" Width="106"/>
+            <Button Content="lineThickness" Height="22" Canvas.Left="-193" Canvas.Top="185" Width="106" Click="ClickLineThickness"/>
+            <Label Content="lineThickness" Height="27" Canvas.Left="-418" Canvas.Top="182" Width="90"/>
+            <TextBox x:Name="inputedNameFigure" Height="21" Canvas.Left="-323" Canvas.Top="217" TextWrapping="Wrap" Width="106"/>
+            <Button Content="nameFigure" Height="22" Canvas.Left="-193" Canvas.Top="217" Width="106" Click="ClickNameFigure"/>
+            <Label Content="nameFigure" Height="27" Canvas.Left="-418" Canvas.Top="214" Width="90"/>
+        </Canvas>
+
+    </Grid>
+</Window>
