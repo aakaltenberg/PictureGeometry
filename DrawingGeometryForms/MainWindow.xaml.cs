@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using IFigure = LibraryDrawingGeometryForms.IFigure;
+using Ellipse = LibraryDrawingGeometryForms.Ellipse;
 using Rectangle = LibraryDrawingGeometryForms.Rectangle;
 
 namespace DrawingGeometryForms
@@ -74,14 +75,16 @@ namespace DrawingGeometryForms
 
                 case "ellipse":
                     // рисуем овал или круг
-                    Ellipse ellipse;
-                    ellipse = new System.Windows.Shapes.Ellipse();
-                    ellipse.Width = double.Parse(inputedWidth.Text);
-                    ellipse.Height = double.Parse(inputedHeight.Text);
-                    ellipse.Margin = new Thickness((double.Parse(inputedCenterX.Text) - ellipse.Width / 2), (double.Parse(inputedCenterY.Text) - ellipse.Height / 2), 0, 0);
-                    ellipse.Stroke = Brushes.Yellow;
-                    ellipse.StrokeThickness = double.Parse(inputedLineThiсkness.Text);
-                    canvas.Children.Add(ellipse);
+                    figure = new Ellipse
+                    {
+                        LineColor = SelectedColor,
+                        Width = double.Parse(inputedWidth.Text),
+                        Height = double.Parse(inputedHeight.Text),
+                        LineThickness = double.Parse(inputedLineThiсkness.Text),
+                        CenterX = double.Parse(inputedCenterX.Text),
+                        CenterY = double.Parse(inputedCenterY.Text)
+                    };
+                    figure.Draw(canvas);
                     break;
                 case "triangle":
                     // рисуем треугольник
