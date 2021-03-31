@@ -22,7 +22,9 @@ namespace LibraryDrawingGeometryForms
         double Width { get; set; }
         double CenterX { get; set; }
         double CenterY { get; set; }
-        string LineColor { get; set; }
-        int LineThickness { get; set; }
+        FigureColor LineColor { get; set; }
+        double LineThickness { get; set; }
+
+        void Draw(Canvas canvas);
     }
 }

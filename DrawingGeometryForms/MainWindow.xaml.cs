@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibraryDrawingGeometryForms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using IFigure = LibraryDrawingGeometryForms.IFigure;
+using Rectangle = LibraryDrawingGeometryForms.Rectangle;
 
 namespace DrawingGeometryForms
 {
@@ -20,87 +23,56 @@ namespace DrawingGeometryForms
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<IFigure> figures = new List<IFigure>();
+
+        public string SelectedColorString { get; set; }
+        public FigureColor SelectedColor
+        {
+            get
+            {
+                switch (SelectedColorString)
+                {
+                    case "Black":
+                        return FigureColor.Black;
+                    case "Red":
+                        return FigureColor.Red;
+                    case "Green":
+                        return FigureColor.Green;
+                    case "Yellow":
+                        return FigureColor.Yellow;
+                    case "Blue":
+                        return FigureColor.Blue;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
         }
-        private void ClickWidth(object sender, RoutedEventArgs e)
-        {
-            double width;
-            if (!double.TryParse(inputedWidth.Text, out width))             // Является ли введенная ширина типом double
-            {
-                MessageBox.Show("Width is not number!");
-                return;
-            }
-        }
-
-        public void ClickHeight(object sender, RoutedEventArgs e)
-        {
-            double height;
-            if (!double.TryParse(inputedHeight.Text, out height))
-            {
-                MessageBox.Show("Height is not number!");
-                return;
-            }
-        }
-
-        public void ClickCenterX(object sender, RoutedEventArgs e)
-        {
-            double centerX;
-            if (!double.TryParse(inputedCenterX.Text, out centerX))
-            {
-                MessageBox.Show("CenterX is not number!");
-                return;
-            }
-        }
-
-        public void ClickCenterY(object sender, RoutedEventArgs e)
-        {
-            double centerY;
-            if (!double.TryParse(inputedCenterY.Text, out centerY))
-            {
-                MessageBox.Show("CenterY is not number!");
-                return;
-            }
-        }
-
-        public void ClickLineColor(object sender, RoutedEventArgs e)
-        {
-            string lineColor = inputedLineColor.Text;
-        }
-
-        public void ClickLineThickness(object sender, RoutedEventArgs e)
-        {
-            int lineThickness;
-            if (!int.TryParse(inputedLineThiсkness.Text, out lineThickness))
-            {
-                MessageBox.Show("lineTickness is not number");
-                return;
-            }
-        }
-
-        public void ClickNameFigure(object sender, RoutedEventArgs e)
-        {
-            string nameFigure = inputedNameFigure.Text;
-        }
         public void ClickEnter(object sender, RoutedEventArgs e)
         {
-            switch (inputedNameFigure)
+            IFigure figure = null;
+            switch (inputedNameFigure.Text)
             {
                 case "rectangle":
                     //рисуем квадрат или прямоугольник
-                    Rectangle rectangle;
-                    rectangle = new System.Windows.Shapes.Rectangle();
-                    rectangle.Width = double.Parse(inputedWidth.Text);
-                    rectangle.Height = double.Parse(inputedHeight.Text);
-                    rectangle.Margin = new Thickness((double.Parse(inputedCenterX.Text) - rectangle.Width / 2), (double.Parse(inputedCenterY.Text) - rectangle.Height / 2), 0, 0);
-                    rectangle.Stroke = Brushes.Black;
-                    rectangle.StrokeThickness = double.Parse(inputedLineThiсkness.Text);
-                    canvas.Children.Add(rectangle);
+                    figure = new Rectangle
+                    {
+                        LineColor = SelectedColor,
+                        Width = double.Parse(inputedWidth.Text),
+                        Height = double.Parse(inputedHeight.Text),
+                        LineThickness = double.Parse(inputedLineThiсkness.Text),
+                        CenterX = double.Parse(inputedCenterX.Text),
+                        CenterY = double.Parse(inputedCenterY.Text)
+                    };
+                    figure.Draw(canvas);
                     break;
 
                 case "ellipse":
-            // рисуем овал или круг
+                    // рисуем овал или круг
                     Ellipse ellipse;
                     ellipse = new System.Windows.Shapes.Ellipse();
                     ellipse.Width = double.Parse(inputedWidth.Text);
@@ -111,7 +83,7 @@ namespace DrawingGeometryForms
                     canvas.Children.Add(ellipse);
                     break;
                 case "triangle":
-            // рисуем треугольник
+                    // рисуем треугольник
                     Line AB;
                     AB = new Line();
                     AB.X1 = (double.Parse(inputedCenterX.Text) - (double.Parse(inputedHeight.Text) / Math.Sqrt(3)));
@@ -124,7 +96,7 @@ namespace DrawingGeometryForms
 
                     Line BC;
                     BC = new Line();
-                    BC.X1 = (double.Parse(inputedCenterX.Text) + (double.Parse(inputedHeight.Text) / Math.Sqrt(3)));
+                    BC.X1 = double.Parse(inputedCenterX.Text) + (double.Parse(inputedHeight.Text) / Math.Sqrt(3));
                     BC.Y1 = (double.Parse(inputedCenterY.Text) - (double.Parse(inputedHeight.Text) / 3));
                     BC.X2 = double.Parse(inputedCenterX.Text);
                     BC.Y2 = (double.Parse(inputedCenterY.Text) + (2 * double.Parse(inputedHeight.Text) / 3));
@@ -143,6 +115,7 @@ namespace DrawingGeometryForms
                     canvas.Children.Add(AC);
                     break;
             }
+            figures.Add(figure);
         }
     }
 }
