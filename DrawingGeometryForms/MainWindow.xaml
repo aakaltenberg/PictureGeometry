@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DrawingGeometryForms"
         mc:Ignorable="d"
-        Title="MainWindow" Height="497" Width="1079">
+        Title="MainWindow" Height="497" Width="1079"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid Margin="0,0,0,37">
         <Button x:Name="Enter" Content="Enter" HorizontalAlignment="Left" Height="39" Margin="706,395,0,0" VerticalAlignment="Top" Width="78" Background="#FFFF1111" Click="ClickEnter" Visibility="Visible" FontSize="24" FontFamily="Times New Roman" BorderBrush="#FF0A0A0A" Foreground="White"/>
         <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="350" Margin="469,15,0,0" VerticalAlignment="Top" Width="552" Background="White" AutomationProperties.IsOffscreenBehavior="Default">
@@ -17,12 +18,7 @@
             <Label Content="centerX" Height="27" Canvas.Left="-418" Canvas.Top="82" Width="90"/>
             <TextBox x:Name="inputedCenterY" Height="21" Canvas.Left="-323" Canvas.Top="117" TextWrapping="Wrap" Width="106"/>
             <Label Content="centerY" Height="31" Canvas.Left="-418" Canvas.Top="114" Width="90"/>
-            <ComboBox Name="FigureColorsControl" ItemsSource="{Binding FigureColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color">
-                <TextBlock>Black</TextBlock>
-                <TextBlock>Blue</TextBlock>
-                <TextBlock>Red</TextBlock>
-                <TextBlock>Green</TextBlock>
-                <TextBlock>Yellow</TextBlock>
+            <ComboBox Name="FigureColorsControl" ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color">
             </ComboBox>
             <TextBox x:Name="inputedLineThiсkness" Height="21" Canvas.Left="-323" Canvas.Top="153" TextWrapping="Wrap" Width="106"/>
             <Label Content="lineThickness" Height="27" Canvas.Left="-418" Canvas.Top="150" Width="90"/>

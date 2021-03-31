@@ -13,42 +13,43 @@ namespace LibraryDrawingGeometryForms
                 case FigureColor.Black:
                     return new Color()
                     {
-                        R = 255,
-                        G = 255,
-                        B = 255,
-                        A = 255,
+                        ScR = 0,
+                        ScG = 0,
+                        ScB = 0,
+                        ScA = 1,
                     };
                 case FigureColor.Blue:
                     return new Color()
                     {
-                        R = 0,
-                        G = 181,
-                        B = 204,
-                        A = 1,
+                        ScR = 0,
+                        ScG = 0,
+                        ScB = 1,
+                        ScA = 1,
                     };
                 case FigureColor.Red:
                     return new Color()
                     {
-                        R = 240,
-                        G = 52,
-                        B = 52,
-                        A = 1,
+                        ScR = 1,
+                        ScG = 0,
+                        ScB = 0,
+                        ScA = 1,
                     };
                 case FigureColor.Green:
+                    const double V = 0.215860531;
                     return new Color()
                     {
-                        R = 11,
-                        G = 156,
-                        B = 49,
-                        A = 1,
+                        ScR = 0,
+                        ScG = (float)V,
+                        ScB = 0,
+                        ScA = 1,
                     };
                 case FigureColor.Yellow:
                     return new Color()
                     {
-                        R = 255,
-                        G = 255,
-                        B = 0,
-                        A = 1,
+                        ScR = 1,
+                        ScG = 1,
+                        ScB = 0,
+                        ScA = 1,
                     };
                 default:
                     throw new Exception();

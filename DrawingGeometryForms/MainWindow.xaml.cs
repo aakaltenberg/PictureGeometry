@@ -24,6 +24,7 @@ namespace DrawingGeometryForms
     public partial class MainWindow : Window
     {
         private List<IFigure> figures = new List<IFigure>();
+        public List<string> AvailableColors => new List<string> { "Black", "Blue", "Red", "Green", "Yellow"};
 
         public string SelectedColorString { get; set; }
         public FigureColor SelectedColor
@@ -78,7 +79,7 @@ namespace DrawingGeometryForms
                     ellipse.Width = double.Parse(inputedWidth.Text);
                     ellipse.Height = double.Parse(inputedHeight.Text);
                     ellipse.Margin = new Thickness((double.Parse(inputedCenterX.Text) - ellipse.Width / 2), (double.Parse(inputedCenterY.Text) - ellipse.Height / 2), 0, 0);
-                    ellipse.Stroke = Brushes.Black;
+                    ellipse.Stroke = Brushes.Yellow;
                     ellipse.StrokeThickness = double.Parse(inputedLineThiсkness.Text);
                     canvas.Children.Add(ellipse);
                     break;
