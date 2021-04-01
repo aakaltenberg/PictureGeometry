@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using IFigure = LibraryDrawingGeometryForms.IFigure;
 using Ellipse = LibraryDrawingGeometryForms.Ellipse;
 using Rectangle = LibraryDrawingGeometryForms.Rectangle;
+using Triangle = LibraryDrawingGeometryForms.Triangle;
 
 namespace DrawingGeometryForms
 {
@@ -88,36 +89,17 @@ namespace DrawingGeometryForms
                     break;
                 case "triangle":
                     // рисуем треугольник
-                    Line AB;
-                    AB = new Line();
-                    AB.X1 = (double.Parse(inputedCenterX.Text) - (double.Parse(inputedHeight.Text) / Math.Sqrt(3)));
-                    AB.Y1 = (double.Parse(inputedCenterY.Text) - (double.Parse(inputedHeight.Text) / 3));
-                    AB.X2 = (double.Parse(inputedCenterX.Text) + (double.Parse(inputedHeight.Text) / Math.Sqrt(3)));
-                    AB.Y2 = (double.Parse(inputedCenterY.Text) - (double.Parse(inputedHeight.Text) / 3));
-                    AB.Stroke = Brushes.Black;
-                    AB.StrokeThickness = double.Parse(inputedLineThiсkness.Text);
-                    canvas.Children.Add(AB);
-
-                    Line BC;
-                    BC = new Line();
-                    BC.X1 = double.Parse(inputedCenterX.Text) + (double.Parse(inputedHeight.Text) / Math.Sqrt(3));
-                    BC.Y1 = (double.Parse(inputedCenterY.Text) - (double.Parse(inputedHeight.Text) / 3));
-                    BC.X2 = double.Parse(inputedCenterX.Text);
-                    BC.Y2 = (double.Parse(inputedCenterY.Text) + (2 * double.Parse(inputedHeight.Text) / 3));
-                    BC.Stroke = Brushes.Black;
-                    BC.StrokeThickness = double.Parse(inputedLineThiсkness.Text);
-                    canvas.Children.Add(BC);
-
-                    Line AC;
-                    AC = new Line();
-                    AC.X1 = (double.Parse(inputedCenterX.Text) - (double.Parse(inputedHeight.Text) / Math.Sqrt(3)));
-                    AC.Y1 = (double.Parse(inputedCenterY.Text) - (double.Parse(inputedHeight.Text) / 3));
-                    AC.X2 = double.Parse(inputedCenterX.Text);
-                    AC.Y2 = (double.Parse(inputedCenterY.Text) + (2 * double.Parse(inputedHeight.Text) / 3));
-                    AC.Stroke = Brushes.Black;
-                    AC.StrokeThickness = double.Parse(inputedLineThiсkness.Text);
-                    canvas.Children.Add(AC);
+                    figure = new Triangle
+                    {
+                        CenterX = double.Parse(inputedCenterX.Text),
+                        CenterY = double.Parse(inputedCenterY.Text),
+                        Height = double.Parse(inputedHeight.Text),
+                        LineColor = SelectedColor,
+                        LineThickness = double.Parse(inputedLineThiсkness.Text),
+                    };
+                    figure.Draw(canvas);
                     break;
+
             }
             figures.Add(figure);
         }
