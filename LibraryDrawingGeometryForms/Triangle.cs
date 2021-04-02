@@ -7,14 +7,14 @@ namespace LibraryDrawingGeometryForms
 {
     public class Triangle : IFigure
     {
-        public double Height { get; set; }
-        public double Width { get; set; }
+        public double Height { get; set; } 
+        public double Width { get; set; } 
         public double CenterX { get; set; }
         public double CenterY { get; set; }
         public FigureColor LineColor { get; set; }
-        public double LineThickness { get; set; }
+        public double LineThickness { get; set; } 
         public void Draw(Canvas canvas)
-        {            
+        {
             System.Windows.Shapes.Line AB;
             AB = new System.Windows.Shapes.Line();
             AB.X1 = CenterX - Height / Math.Sqrt(3);

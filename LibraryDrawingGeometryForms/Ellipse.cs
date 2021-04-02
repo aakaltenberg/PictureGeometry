@@ -15,7 +15,7 @@ namespace LibraryDrawingGeometryForms
         public double LineThickness { get; set; }
 
         public void Draw(Canvas canvas)
-        {
+        { 
             System.Windows.Shapes.Ellipse ellipse;
             ellipse = new System.Windows.Shapes.Ellipse
             {

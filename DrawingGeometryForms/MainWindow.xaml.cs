@@ -26,8 +26,10 @@ namespace DrawingGeometryForms
     public partial class MainWindow : Window
     {
         private List<IFigure> figures = new List<IFigure>();
-        public List<string> AvailableColors => new List<string> { "Black", "Blue", "Red", "Green", "Yellow"};
+        public List<string> AvailableFigures => new List<string> { "rectangle", "ellipse", "triangle" }; //для списка figures
+        public string SelectedFigureString { get; set; }
 
+        public List<string> AvailableColors => new List<string> { "Black", "Blue", "Red", "Green", "Yellow"};  //для списка colors
         public string SelectedColorString { get; set; }
         public FigureColor SelectedColor
         {
@@ -58,7 +60,7 @@ namespace DrawingGeometryForms
         public void ClickEnter(object sender, RoutedEventArgs e)
         {
             IFigure figure = null;
-            switch (inputedNameFigure.Text)
+            switch (SelectedFigureString)
             {
                 case "rectangle":
                     //рисуем квадрат или прямоугольник
@@ -99,9 +101,13 @@ namespace DrawingGeometryForms
                     };
                     figure.Draw(canvas);
                     break;
-
             }
             figures.Add(figure);
+        }
+
+        private void clickUp(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
