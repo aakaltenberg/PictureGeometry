@@ -17,6 +17,7 @@ using IFigure = LibraryDrawingGeometryForms.IFigure;
 using Ellipse = LibraryDrawingGeometryForms.Ellipse;
 using Rectangle = LibraryDrawingGeometryForms.Rectangle;
 using Triangle = LibraryDrawingGeometryForms.Triangle;
+using System.Globalization;
 
 namespace DrawingGeometryForms
 {
@@ -105,9 +106,43 @@ namespace DrawingGeometryForms
             figures.Add(figure);
         }
 
-        private void clickUp(object sender, RoutedEventArgs e)
+        private void ClickUp(object sender, RoutedEventArgs e)
         {
+            string specifier;
+            CultureInfo culture;
+            specifier = "G";
+            culture = CultureInfo.CreateSpecificCulture("eu-ES");
+            double dy = double.Parse(inputedCenterY.Text) - 15;
+            inputedCenterY.Text = dy.ToString(specifier, culture);
+        }
+        private void ClickDown(object sender, RoutedEventArgs e)
+        {
+            string specifier;
+            CultureInfo culture;
+            specifier = "G";
+            culture = CultureInfo.CreateSpecificCulture("eu-ES");
+            double dy = double.Parse(inputedCenterY.Text) + 15;
+            inputedCenterY.Text = dy.ToString(specifier, culture);
+        }
 
+        private void ClickLeft(object sender, RoutedEventArgs e)
+        {
+            string specifier;
+            CultureInfo culture;
+            specifier = "G";
+            culture = CultureInfo.CreateSpecificCulture("eu-ES");
+            double dx = double.Parse(inputedCenterX.Text) - 15;
+            inputedCenterX.Text = dx.ToString(specifier, culture);
+        }
+
+        private void ClickRight(object sender, RoutedEventArgs e)
+        {
+            string specifier;
+            CultureInfo culture;
+            specifier = "G";
+            culture = CultureInfo.CreateSpecificCulture("eu-ES");
+            double dx = double.Parse(inputedCenterX.Text) + 15;
+            inputedCenterX.Text = dx.ToString(specifier, culture);
         }
     }
 }

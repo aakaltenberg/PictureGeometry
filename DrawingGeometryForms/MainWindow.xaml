@@ -23,10 +23,10 @@
             <ComboBox Name="FigureColorsControl" ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color" Canvas.Left="-245" Canvas.Top="198"/>
             <ComboBox Name="NameFigures" ItemsSource="{Binding AvailableFigures}" SelectedItem="{Binding SelectedFigureString, Mode=TwoWay}" Text="Select figure" Canvas.Left="-418" Canvas.Top="198"/>
         </Canvas>
-        <Button Content="Up" HorizontalAlignment="Left" Height="30" Margin="135,266,0,0" VerticalAlignment="Top" Width="40" Click="clickUp"/>
-        <Button Content="Left" HorizontalAlignment="Left" Height="30" Margin="95,296,0,0" VerticalAlignment="Top" Width="40"/>
-        <Button Content="Right" HorizontalAlignment="Left" Height="30" Margin="175,296,0,0" VerticalAlignment="Top" Width="40"/>
-        <Button Content="Down" HorizontalAlignment="Left" Height="30" Margin="135,296,0,0" VerticalAlignment="Top" Width="40"/>
+        <Button Content="Up" HorizontalAlignment="Left" Height="30" Margin="135,266,0,0" VerticalAlignment="Top" Width="40" Click="ClickUp"/>
+        <Button Content="Left" HorizontalAlignment="Left" Height="30" Margin="95,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickLeft"/>
+        <Button Content="Right" HorizontalAlignment="Left" Height="30" Margin="175,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickRight"/>
+        <Button Content="Down" HorizontalAlignment="Left" Height="30" Margin="135,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickDown"/>
 
     </Grid>
 </Window>
