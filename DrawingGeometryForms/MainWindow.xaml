@@ -8,25 +8,27 @@
         Title="MainWindow" Height="497" Width="1079"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid Margin="0,0,0,37">
-        <Button x:Name="Enter" Content="Enter" HorizontalAlignment="Left" Height="39" Margin="95,326,0,0" VerticalAlignment="Top" Width="120" Background="#FFFF1111" Click="ClickEnter" Visibility="Visible" FontSize="24" FontFamily="Times New Roman" BorderBrush="#FF0A0A0A" Foreground="White"/>
-        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="350" Margin="469,15,0,0" VerticalAlignment="Top" Width="552" Background="White" AutomationProperties.IsOffscreenBehavior="Default">
-            <Label Content="height" Height="27" Canvas.Left="-418" Canvas.Top="18" Width="90"/>
-            <TextBox x:Name="inputedHeight" Height="21" Canvas.Left="-323" Canvas.Top="21" TextWrapping="Wrap" Width="106"/>
-            <TextBox x:Name="inputedWidth" Height="21" Canvas.Left="-323" Canvas.Top="53" TextWrapping="Wrap" Width="106"/>
-            <Label Content="width" Height="27" Canvas.Left="-418" Canvas.Top="50" Width="90"/>
-            <TextBox x:Name="inputedCenterX" Height="21" Canvas.Left="-323" Canvas.Top="85" TextWrapping="Wrap" Width="106"/>
-            <Label Content="centerX" Height="27" Canvas.Left="-418" Canvas.Top="82" Width="90"/>
-            <TextBox x:Name="inputedCenterY" Height="21" Canvas.Left="-323" Canvas.Top="117" TextWrapping="Wrap" Width="106"/>
-            <Label Content="centerY" Height="31" Canvas.Left="-418" Canvas.Top="114" Width="90"/>
-            <TextBox x:Name="inputedLineThiсkness" Height="21" Canvas.Left="-323" Canvas.Top="153" TextWrapping="Wrap" Width="106"/>
-            <Label Content="lineThickness" Height="27" Canvas.Left="-418" Canvas.Top="150" Width="90"/>
-            <ComboBox Name="FigureColorsControl" ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color" Canvas.Left="-245" Canvas.Top="198"/>
-            <ComboBox Name="NameFigures" ItemsSource="{Binding AvailableFigures}" SelectedItem="{Binding SelectedFigureString, Mode=TwoWay}" Text="Select figure" Canvas.Left="-418" Canvas.Top="198"/>
+        <Canvas>
+            <Button x:Name="Enter" Content="Enter" HorizontalAlignment="Left" Height="39" Margin="95,326,0,0" VerticalAlignment="Top" Width="120" Background="#FFFF1111" Click="ClickEnter" Visibility="Visible" FontSize="24" FontFamily="Times New Roman" BorderBrush="#FF0A0A0A" Foreground="White"/>
+            <Label Content="height" Height="27"  Width="90" Margin="25,212,964,205" AutomationProperties.IsOffscreenBehavior="Onscreen"/>
+            <TextBox x:Name="inputedHeight" Height="21" TextWrapping="Wrap" Width="106" Margin="135,212,838,211" Text="50"/>
+            <TextBox x:Name="inputedWidth" Height="21" TextWrapping="Wrap" Width="106" Margin="135,172,838,251" Text="50"/>
+            <Label Content="width" Height="27"  Width="90" Margin="25,172,964,245"/>
+            <TextBox x:Name="inputedCenterX" Height="21"  TextWrapping="Wrap" Width="106" Margin="135,127,838,296" Text="200"/>
+            <Label Content="centerX" Height="27" Width="90" Margin="25,113,964,304"/>
+            <TextBox x:Name="inputedCenterY" Height="21" TextWrapping="Wrap" Width="106" Margin="135,87,838,336" Text="200"/>
+            <Label Content="centerY" Height="31" Width="90" Margin="25,77,964,336"/>
+            <TextBox x:Name="inputedLineThiсkness" Height="21" TextWrapping="Wrap" Width="106" Margin="135,46,838,377" Text="5"/>
+            <Label Content="lineThickness" Height="27" Width="90" Margin="25,43,964,374"/>
+            <ComboBox Name="NameFigures" ItemsSource="{Binding AvailableFigures}" SelectedItem="{Binding SelectedFigureString, Mode=TwoWay}" Text="Select figure" Margin="364,48,625,377"/>
+            <ComboBox Name="FigureColorsControl" ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color" Margin="270,46,738,376">
+            </ComboBox>
+            <Button Content="Up" HorizontalAlignment="Left" Height="30" Margin="135,266,0,0" VerticalAlignment="Top" Width="40" Click="ClickUp"/>
+            <Button Content="Left" HorizontalAlignment="Left" Height="30" Margin="95,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickLeft"/>
+            <Button Content="Right" HorizontalAlignment="Left" Height="30" Margin="175,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickRight"/>
+            <Button Content="Down" HorizontalAlignment="Left" Height="30" Margin="135,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickDown"/>
+            <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="350" Margin="469,15,0,0" VerticalAlignment="Top" Width="552" Background="White" 
+                             AutomationProperties.IsOffscreenBehavior="Default"/>
         </Canvas>
-        <Button Content="Up" HorizontalAlignment="Left" Height="30" Margin="135,266,0,0" VerticalAlignment="Top" Width="40" Click="ClickUp"/>
-        <Button Content="Left" HorizontalAlignment="Left" Height="30" Margin="95,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickLeft"/>
-        <Button Content="Right" HorizontalAlignment="Left" Height="30" Margin="175,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickRight"/>
-        <Button Content="Down" HorizontalAlignment="Left" Height="30" Margin="135,296,0,0" VerticalAlignment="Top" Width="40" Click="ClickDown"/>
-
     </Grid>
 </Window>

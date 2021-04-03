@@ -67,14 +67,14 @@ namespace DrawingGeometryForms
                     //рисуем квадрат или прямоугольник
                     figure = new Rectangle
                     {
-                        LineColor = SelectedColor,
-                        Width = double.Parse(inputedWidth.Text),
-                        Height = double.Parse(inputedHeight.Text),
-                        LineThickness = double.Parse(inputedLineThiсkness.Text),
-                        CenterX = double.Parse(inputedCenterX.Text),
-                        CenterY = double.Parse(inputedCenterY.Text)
+                    LineColor = SelectedColor,
+                    Width = double.Parse(inputedWidth.Text),
+                    Height = double.Parse(inputedHeight.Text),
+                    LineThickness = double.Parse(inputedLineThiсkness.Text),
+                    CenterX = double.Parse(inputedCenterX.Text),
+                    CenterY = double.Parse(inputedCenterY.Text)
                     };
-                    figure.Draw(canvas);
+                    figure.Draw(canvas, OnFigureMouseDown);
                     break;
 
                 case "ellipse":
@@ -88,7 +88,7 @@ namespace DrawingGeometryForms
                         CenterX = double.Parse(inputedCenterX.Text),
                         CenterY = double.Parse(inputedCenterY.Text)
                     };
-                    figure.Draw(canvas);
+                    figure.Draw(canvas, OnFigureMouseDown);
                     break;
                 case "triangle":
                     // рисуем треугольник
@@ -100,28 +100,54 @@ namespace DrawingGeometryForms
                         LineColor = SelectedColor,
                         LineThickness = double.Parse(inputedLineThiсkness.Text),
                     };
-                    figure.Draw(canvas);
+                    figure.Draw(canvas, OnFigureMouseDown);
                     break;
             }
             figures.Add(figure);
         }
 
+        private void OnFigureMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var clickedShape = (Shape)sender;
+            foreach (var figure in figures)
+            {
+                figure.IsSelected = false;
+                if (figure.HasShape(clickedShape))
+                {
+                    figure.IsSelected = true;
+                }
+            }
+
+            RefreshScene();
+        }
+
         private void ClickUp(object sender, RoutedEventArgs e)
         {
-            string specifier;
-            CultureInfo culture;
-            specifier = "G";
-            culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dy = double.Parse(inputedCenterY.Text) - 15;
-            inputedCenterY.Text = dy.ToString(specifier, culture);
+            var dx = 15;
+            canvas.Children.Clear();
+            foreach(var figure in figures)
+            {
+                figure.CenterY -= dx;
+                figure.Draw(canvas, OnFigureMouseDown);
+            }
         }
+
+        private void RefreshScene()
+        {
+            canvas.Children.Clear();
+            foreach (var figure in figures)
+            {
+                figure.Draw(canvas, OnFigureMouseDown);
+            }
+        }
+
         private void ClickDown(object sender, RoutedEventArgs e)
         {
             string specifier;
             CultureInfo culture;
             specifier = "G";
             culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dy = double.Parse(inputedCenterY.Text) + 15;
+            double dy = double.Parse(inputedCenterY.Text) + 15;     // Смещение по оси y вниз
             inputedCenterY.Text = dy.ToString(specifier, culture);
         }
 
@@ -131,7 +157,7 @@ namespace DrawingGeometryForms
             CultureInfo culture;
             specifier = "G";
             culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dx = double.Parse(inputedCenterX.Text) - 15;
+            double dx = double.Parse(inputedCenterX.Text) - 15;      // Смещение по оси x влево
             inputedCenterX.Text = dx.ToString(specifier, culture);
         }
 
@@ -141,7 +167,7 @@ namespace DrawingGeometryForms
             CultureInfo culture;
             specifier = "G";
             culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dx = double.Parse(inputedCenterX.Text) + 15;
+            double dx = double.Parse(inputedCenterX.Text) + 15;      // смещение по оси x вправо
             inputedCenterX.Text = dx.ToString(specifier, culture);
         }
     }

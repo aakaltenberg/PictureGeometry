@@ -1,0 +1,40 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Shapes;
+
+
+namespace LibraryDrawingGeometryForms
+{
+    public abstract class BaseFigure : IFigure
+    {
+        protected List<Shape> shapes = new List<Shape>();
+        public double Height { get; set; }
+        public double Width { get; set; }
+        public double CenterX { get; set; }
+        public double CenterY { get; set; }
+        public FigureColor LineColor { get; set; }
+        public double LineThickness { get; set; }
+        public bool IsSelected { get; set; }
+
+        public abstract void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler);
+
+        public bool HasShape(Shape shape)
+        {
+            return shapes.Contains(shape);
+        }
+
+        protected void ClearShapes(MouseButtonEventHandler mouseDownEventHandler)
+        {
+            if (shapes.Any())
+            {
+                foreach (var shape in shapes)
+                {
+                    shape.MouseDown -= mouseDownEventHandler;
+                }
+                shapes.Clear();
+            }
+        }
+    }
+}
