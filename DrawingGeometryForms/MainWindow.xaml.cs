@@ -123,12 +123,16 @@ namespace DrawingGeometryForms
 
         private void ClickUp(object sender, RoutedEventArgs e)
         {
-            var dx = 15;
+            var dy = 15;
             canvas.Children.Clear();
             foreach(var figure in figures)
             {
-                figure.CenterY -= dx;
-                figure.Draw(canvas, OnFigureMouseDown);
+                if (figure.IsSelected)
+                {
+                    figure.CenterY -= dy;
+                    figure.Draw(canvas, OnFigureMouseDown);
+                }
+                RefreshScene();
             }
         }
 
@@ -143,32 +147,47 @@ namespace DrawingGeometryForms
 
         private void ClickDown(object sender, RoutedEventArgs e)
         {
-            string specifier;
-            CultureInfo culture;
-            specifier = "G";
-            culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dy = double.Parse(inputedCenterY.Text) + 15;     // Смещение по оси y вниз
-            inputedCenterY.Text = dy.ToString(specifier, culture);
+            var dy = 15;
+            canvas.Children.Clear();
+            foreach (var figure in figures)
+            {
+                if (figure.IsSelected)
+                {
+                    figure.CenterY += dy;
+                    figure.Draw(canvas, OnFigureMouseDown);
+                }
+                RefreshScene();
+            }
         }
 
         private void ClickLeft(object sender, RoutedEventArgs e)
         {
-            string specifier;
-            CultureInfo culture;
-            specifier = "G";
-            culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dx = double.Parse(inputedCenterX.Text) - 15;      // Смещение по оси x влево
-            inputedCenterX.Text = dx.ToString(specifier, culture);
+            var dx = 15;
+            canvas.Children.Clear();
+            foreach (var figure in figures)
+            {
+                if (figure.IsSelected)
+                {
+                    figure.CenterX -= dx;
+                    figure.Draw(canvas, OnFigureMouseDown);
+                }
+                RefreshScene();
+            }
         }
 
         private void ClickRight(object sender, RoutedEventArgs e)
         {
-            string specifier;
-            CultureInfo culture;
-            specifier = "G";
-            culture = CultureInfo.CreateSpecificCulture("eu-ES");
-            double dx = double.Parse(inputedCenterX.Text) + 15;      // смещение по оси x вправо
-            inputedCenterX.Text = dx.ToString(specifier, culture);
+            var dx = 15;
+            canvas.Children.Clear();
+            foreach (var figure in figures)
+            {
+                if (figure.IsSelected)
+                {
+                    figure.CenterX += dx;
+                    figure.Draw(canvas, OnFigureMouseDown);
+                }
+                RefreshScene();
+            }
         }
     }
 }
