@@ -26,7 +26,6 @@ namespace LibraryDrawingGeometryForms
             rectangle.MouseLeftButtonDown += mouseDownEventHandler;  // подписываем к событию
                                                                      // метод(обработчик события) через
                                                                      // делегат MouseButtonEventHandler
-            Point positionMouse = Mouse.GetPosition(relativeTo: canvas);
             shapes.Add(rectangle);  // при отрисовке фигуры закидываем в лист shapes объект rectangle
             canvas.Children.Add(rectangle);
         }

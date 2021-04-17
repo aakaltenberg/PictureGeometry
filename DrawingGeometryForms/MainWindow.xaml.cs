@@ -69,11 +69,6 @@ namespace DrawingGeometryForms
                     figure = new Rectangle
                     {
                         LineColor = SelectedColor,
-                        Width = double.Parse(inputedWidth.Text),
-                        Height = double.Parse(inputedHeight.Text),
-                        LineThickness = double.Parse(inputedLineThiсkness.Text),
-                        CenterX = double.Parse(inputedCenterX.Text),
-                        CenterY = double.Parse(inputedCenterY.Text)
                     };
                     break;
 
@@ -82,22 +77,13 @@ namespace DrawingGeometryForms
                     figure = new Ellipse
                     {
                         LineColor = SelectedColor,
-                        Width = double.Parse(inputedWidth.Text),
-                        Height = double.Parse(inputedHeight.Text),
-                        LineThickness = double.Parse(inputedLineThiсkness.Text),
-                        CenterX = double.Parse(inputedCenterX.Text),
-                        CenterY = double.Parse(inputedCenterY.Text)
                     };
                     break;
                 case "triangle":
                     // рисуем треугольник
                     figure = new Triangle
                     {
-                        CenterX = double.Parse(inputedCenterX.Text),
-                        CenterY = double.Parse(inputedCenterY.Text),
-                        Height = double.Parse(inputedHeight.Text),
                         LineColor = SelectedColor,
-                        LineThickness = double.Parse(inputedLineThiсkness.Text),
                     };
                     break;
             }
@@ -113,7 +99,43 @@ namespace DrawingGeometryForms
                 figure.Draw(canvas, OnFigureMouseDown);
             }
         }
-        
+        private void DrawFigures(object sender, MouseButtonEventArgs e)
+        {
+            canvas.MouseLeftButtonDown += ClickOnCanvasMouseLeftButtonDown;
+        }
+        private void ClickOnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            IFigure figure = null;
+            switch (SelectedFigureString)
+            {
+                case "rectangle":
+                    //рисуем квадрат или прямоугольник
+                    figure = new Rectangle
+                    {
+                        LineColor = SelectedColor,
+                    };
+                    break;
+
+                case "ellipse":
+                    // рисуем овал или круг
+                    figure = new Ellipse
+                    {
+                        LineColor = SelectedColor,
+                    };
+                    break;
+                case "triangle":
+                    // рисуем треугольник
+                    figure = new Triangle
+                    {
+                        LineColor = SelectedColor,
+                    };
+                    break;
+            }
+            figure.Draw(canvas, OnFigureMouseDown);
+            figures.Add(figure);
+            canvas.MouseLeftButtonDown -= ClickOnCanvasMouseLeftButtonDown;
+            e.Handled = true;
+        }
         private void OnFigureMouseDown(object sender, MouseButtonEventArgs e)  // создание обработчика события
                                                                                // нажатия мышки на фигуру
         {
@@ -132,16 +154,21 @@ namespace DrawingGeometryForms
             RefreshScene();
             canvas.MouseMove += OnSelectedFigureMouseMove;
             canvas.MouseLeftButtonUp += OnSelectedFigureMouseUp;
-            e.Handled = true;
+            e.Handled = true; //говорит программе, что событие совершилось, дальше можно не идти по обработчикам
+                              //объекты на канвасе идут слоями, children находятся
+                              //выше по условной апликате и обрабатываются первыми обычно
+                              //что-то вроде break
         }
 
         private void OnSelectedFigureMouseUp(object sender, MouseButtonEventArgs e)
+            // При поднятии мыши отписываем соответствующие обработчики
         {
             canvas.MouseMove -= OnSelectedFigureMouseMove;
             canvas.MouseLeftButtonUp -= OnSelectedFigureMouseUp;
         }
 
         private void OnSelectedFigureMouseMove(object sender, MouseEventArgs e)
+            // перемещение выбранной фигуры по типу преследования курсора мыши
         {
             foreach (var figure in figures.Where(x => x.IsSelected))
             {
@@ -151,7 +178,28 @@ namespace DrawingGeometryForms
             }
             RefreshScene();
         }
+        private void leftMouseOnCanvas(object sender, MouseButtonEventArgs e)
+        {
+            var figure = figures.FirstOrDefault(x => x.IsSelected);
+            if (figure == null)
+            {
+                return;
+            }
+            figure.IsSelected = false;
 
+            RefreshScene();
+        }
+        private void ClickDeleteFigure(object sender, RoutedEventArgs e)
+        {
+            var figure = figures.FirstOrDefault(x => x.IsSelected);
+            figures.Remove(figure);
+            RefreshScene();
+        }
+
+
+
+
+        /*   Здесь был код для перемещения объектов кнопками, расположенными на канвасе
         private void ClickUp(object sender, RoutedEventArgs e)
         {
             var dy = 15;
@@ -208,22 +256,7 @@ namespace DrawingGeometryForms
             figure.Draw(canvas, OnFigureMouseDown);
             RefreshScene();
         }
-        private void leftMouseOnCanvas(object sender, MouseButtonEventArgs e)
-        {
-            var figure = figures.FirstOrDefault(x => x.IsSelected);
-            if (figure == null)
-            {
-                return;
-            }
-            figure.IsSelected = false;
+        */
 
-            RefreshScene();
-        }
-        private void clickDeleteFigure(object sender, RoutedEventArgs e)
-        {
-            var figure = figures.FirstOrDefault(x => x.IsSelected);
-            figures.Remove(figure);
-            RefreshScene();
-        }
     }
 }
