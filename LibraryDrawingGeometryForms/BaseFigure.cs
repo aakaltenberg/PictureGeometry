@@ -19,10 +19,10 @@ namespace LibraryDrawingGeometryForms
         public bool IsSelected { get; set; }
 
         public abstract void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler);
-
         public bool HasShape(Shape shape)
         {
-            return shapes.Contains(shape);
+            return shapes.Contains(shape); //возвращает true, если входящий объект, принадлежащий
+                                           //классу Shape, содержится в листе shapes
         }
 
         protected void ClearShapes(MouseButtonEventHandler mouseDownEventHandler)

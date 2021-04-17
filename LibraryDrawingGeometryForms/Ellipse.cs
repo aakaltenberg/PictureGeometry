@@ -21,8 +21,8 @@ namespace LibraryDrawingGeometryForms
             ellipse.Margin = new Thickness((CenterX - ellipse.Width / 2), CenterY - ellipse.Height / 2, 0, 0);
             ellipse.Stroke = new SolidColorBrush(LineColor.ToColor());
             ellipse.StrokeThickness = LineThickness + (IsSelected ? 2 : 0);
-            ellipse.MouseDown += mouseDownEventHandler;
-            shapes.Add(ellipse);
+            ellipse.MouseLeftButtonDown += mouseDownEventHandler;
+            shapes.Add(ellipse); // при отрисовке фигуры в лист шейп закидываем объект эллипс
             canvas.Children.Add(ellipse);
         }
     }
