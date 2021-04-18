@@ -10,10 +10,10 @@ namespace LibraryDrawingGeometryForms
     public abstract class BaseFigure : IFigure
     {
         protected List<Shape> shapes = new List<Shape>();
-        public double Height { get; set; } = 50;
-        public double Width { get; set; } = 50;
-        public double CenterX { get; set; } = 200;
-        public double CenterY { get; set; } = 200;
+        public double Height { get; set; } = 0;
+        public double Width { get; set; } = 0;
+        public double LeftAngleX { get; set; } = 200;
+        public double LeftAngleY { get; set; } = 200;
         public FigureColor LineColor { get; set; }
         public double LineThickness { get; set; } = 5;
         public bool IsSelected { get; set; }

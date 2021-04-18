@@ -17,10 +17,10 @@ namespace LibraryDrawingGeometryForms
             System.Windows.Shapes.Rectangle rectangle;
             rectangle = new System.Windows.Shapes.Rectangle
             {
-                Width = Width,
-                Height = Height,
+                Width = Math.Abs(Width),
+                Height = Math.Abs(Height),
             };
-            rectangle.Margin = new Thickness((CenterX - rectangle.Width / 2), CenterY - rectangle.Height / 2, 0, 0);
+            rectangle.Margin = new Thickness(LeftAngleX, LeftAngleY, 0, 0);
             rectangle.Stroke = new SolidColorBrush(LineColor.ToColor());
             rectangle.StrokeThickness = LineThickness + (IsSelected ? 2 : 0);
             rectangle.MouseLeftButtonDown += mouseDownEventHandler;  // подписываем к событию

@@ -59,37 +59,6 @@ namespace DrawingGeometryForms
         {
             InitializeComponent();
         }
-        public void ClickEnter(object sender, RoutedEventArgs e)
-        {
-            IFigure figure = null;
-            switch (SelectedFigureString)
-            {
-                case "rectangle":
-                    //рисуем квадрат или прямоугольник
-                    figure = new Rectangle
-                    {
-                        LineColor = SelectedColor,
-                    };
-                    break;
-
-                case "ellipse":
-                    // рисуем овал или круг
-                    figure = new Ellipse
-                    {
-                        LineColor = SelectedColor,
-                    };
-                    break;
-                case "triangle":
-                    // рисуем треугольник
-                    figure = new Triangle
-                    {
-                        LineColor = SelectedColor,
-                    };
-                    break;
-            }
-            figure.Draw(canvas, OnFigureMouseDown);
-            figures.Add(figure);
-        }
         private void RefreshScene()
             // заново отрисовываем все фигуры
         {
@@ -99,11 +68,18 @@ namespace DrawingGeometryForms
                 figure.Draw(canvas, OnFigureMouseDown);
             }
         }
-        private void DrawFigures(object sender, MouseButtonEventArgs e)
+
+        private void DrawingFigureMoveMouse(object sender, MouseEventArgs e)
         {
-            canvas.MouseLeftButtonDown += ClickOnCanvasMouseLeftButtonDown;
+            var figure = figures.Last();
+                figure.Height = e.GetPosition(canvas).Y - figure.LeftAngleY;
+                figure.Width = e.GetPosition(canvas).X - figure.LeftAngleX;
+            RefreshScene();
+            e.Handled = true;
         }
+
         private void ClickOnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            // обработчик нажатия ЛКМ на канвас => рисует выбранную фигуру с дефолтными пропертями из BaseFigure
         {
             IFigure figure = null;
             switch (SelectedFigureString)
@@ -112,6 +88,8 @@ namespace DrawingGeometryForms
                     //рисуем квадрат или прямоугольник
                     figure = new Rectangle
                     {
+                        LeftAngleX = e.GetPosition(canvas).X,
+                        LeftAngleY = e.GetPosition(canvas).Y,
                         LineColor = SelectedColor,
                     };
                     break;
@@ -120,6 +98,8 @@ namespace DrawingGeometryForms
                     // рисуем овал или круг
                     figure = new Ellipse
                     {
+                        LeftAngleX = e.GetPosition(canvas).X,
+                        LeftAngleY = e.GetPosition(canvas).Y,
                         LineColor = SelectedColor,
                     };
                     break;
@@ -127,15 +107,23 @@ namespace DrawingGeometryForms
                     // рисуем треугольник
                     figure = new Triangle
                     {
+                        LeftAngleX = e.GetPosition(canvas).X,
+                        LeftAngleY = e.GetPosition(canvas).Y,
                         LineColor = SelectedColor,
                     };
                     break;
             }
             figure.Draw(canvas, OnFigureMouseDown);
             figures.Add(figure);
-            canvas.MouseLeftButtonDown -= ClickOnCanvasMouseLeftButtonDown;
-            e.Handled = true;
+            canvas.MouseMove += DrawingFigureMoveMouse;
+            canvas.MouseLeftButtonUp += DrawingFigureLeftButtonUp;
         }
+
+        private void DrawingFigureLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            canvas.MouseMove -= DrawingFigureMoveMouse;
+        }
+
         private void OnFigureMouseDown(object sender, MouseButtonEventArgs e)  // создание обработчика события
                                                                                // нажатия мышки на фигуру
         {
@@ -172,13 +160,13 @@ namespace DrawingGeometryForms
         {
             foreach (var figure in figures.Where(x => x.IsSelected))
             {
-                figure.CenterX = e.GetPosition(canvas).X;
-                figure.CenterY = e.GetPosition(canvas).Y;
+                figure.LeftAngleX = e.GetPosition(canvas).X;
+                figure.LeftAngleY = e.GetPosition(canvas).Y;
 
             }
             RefreshScene();
         }
-        private void leftMouseOnCanvas(object sender, MouseButtonEventArgs e)
+        private void RightMouseOnCanvas(object sender, MouseButtonEventArgs e)
         {
             var figure = figures.FirstOrDefault(x => x.IsSelected);
             if (figure == null)

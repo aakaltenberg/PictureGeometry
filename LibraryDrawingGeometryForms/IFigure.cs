@@ -20,8 +20,8 @@ namespace LibraryDrawingGeometryForms
     {
         double Height { get; set; }
         double Width { get; set; }
-        double CenterX { get; set; }
-        double CenterY { get; set; }
+        double LeftAngleX { get; set; }
+        double LeftAngleY { get; set; }
         FigureColor LineColor { get; set; }
         double LineThickness { get; set; }
 

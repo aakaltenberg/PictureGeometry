@@ -15,10 +15,10 @@ namespace LibraryDrawingGeometryForms
             System.Windows.Shapes.Ellipse ellipse;
             ellipse = new System.Windows.Shapes.Ellipse
             {
-                Width = Width,
-                Height = Height,
+                Width = Math.Abs(Width),
+                Height = Math.Abs(Height),
             };
-            ellipse.Margin = new Thickness((CenterX - ellipse.Width / 2), CenterY - ellipse.Height / 2, 0, 0);
+            ellipse.Margin = new Thickness(LeftAngleX, LeftAngleY, 0, 0);
             ellipse.Stroke = new SolidColorBrush(LineColor.ToColor());
             ellipse.StrokeThickness = LineThickness + (IsSelected ? 2 : 0);
             ellipse.MouseLeftButtonDown += mouseDownEventHandler;

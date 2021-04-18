@@ -10,9 +10,8 @@
     <Grid Margin="0,0,0,37">
         <Canvas Margin="0,10,0,-10">
             <Canvas x:Name="canvas" Height="379" Margin="469,15,0,0" Width="552" Background="#FFECECEC" 
-                             AutomationProperties.IsOffscreenBehavior="Default" Canvas.Top="10" MouseLeftButtonDown="DrawFigures"/>
-            <Button x:Name="Delete" Content="Delete" Canvas.Left="82" Height="23" Width="90" Click="ClickDeleteFigure" Canvas.Top="27"/>
-            <Button x:Name="Drawing" Content="Enter" Height="23" Width="82" Click="ClickEnter" Canvas.Top="27"/>
+                             AutomationProperties.IsOffscreenBehavior="Default" Canvas.Top="10" MouseLeftButtonDown="ClickOnCanvasMouseLeftButtonDown" MouseRightButtonDown="RightMouseOnCanvas"/>
+            <Button x:Name="Delete" Content="Delete" Canvas.Left="172" Height="28" Width="102" Click="ClickDeleteFigure" Canvas.Top="-1"/>
             <ComboBox x:Name="FigureColorsControl"  ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color" Height="27" Width="82"/>
             <ComboBox x:Name="NameFigures" ItemsSource="{Binding AvailableFigures}" SelectedItem="{Binding SelectedFigureString, Mode=TwoWay}" Text="Select figure" Height="27" Canvas.Left="82" Width="90"/>
         </Canvas>
