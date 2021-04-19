@@ -72,8 +72,8 @@ namespace DrawingGeometryForms
         private void DrawingFigureMoveMouse(object sender, MouseEventArgs e)
         {
             var figure = figures.Last();
-                figure.Height = e.GetPosition(canvas).Y - figure.LeftAngleY;
-                figure.Width = e.GetPosition(canvas).X - figure.LeftAngleX;
+                figure.Height = e.GetPosition(canvas).Y - figure.UpperLeftAngleY;
+                figure.Width = e.GetPosition(canvas).X - figure.UpperLeftAngleX;
             RefreshScene();
             e.Handled = true;
         }
@@ -88,8 +88,8 @@ namespace DrawingGeometryForms
                     //рисуем квадрат или прямоугольник
                     figure = new Rectangle
                     {
-                        LeftAngleX = e.GetPosition(canvas).X,
-                        LeftAngleY = e.GetPosition(canvas).Y,
+                        UpperLeftAngleX = e.GetPosition(canvas).X,
+                        UpperLeftAngleY = e.GetPosition(canvas).Y,
                         LineColor = SelectedColor,
                     };
                     break;
@@ -98,8 +98,8 @@ namespace DrawingGeometryForms
                     // рисуем овал или круг
                     figure = new Ellipse
                     {
-                        LeftAngleX = e.GetPosition(canvas).X,
-                        LeftAngleY = e.GetPosition(canvas).Y,
+                        UpperLeftAngleX = e.GetPosition(canvas).X,
+                        UpperLeftAngleY = e.GetPosition(canvas).Y,
                         LineColor = SelectedColor,
                     };
                     break;
@@ -107,8 +107,8 @@ namespace DrawingGeometryForms
                     // рисуем треугольник
                     figure = new Triangle
                     {
-                        LeftAngleX = e.GetPosition(canvas).X,
-                        LeftAngleY = e.GetPosition(canvas).Y,
+                        UpperLeftAngleX = e.GetPosition(canvas).X,
+                        UpperLeftAngleY = e.GetPosition(canvas).Y,
                         LineColor = SelectedColor,
                     };
                     break;
@@ -160,8 +160,8 @@ namespace DrawingGeometryForms
         {
             foreach (var figure in figures.Where(x => x.IsSelected))
             {
-                figure.LeftAngleX = e.GetPosition(canvas).X;
-                figure.LeftAngleY = e.GetPosition(canvas).Y;
+                figure.UpperLeftAngleX = e.GetPosition(canvas).X;
+                figure.UpperLeftAngleY = e.GetPosition(canvas).Y;
 
             }
             RefreshScene();
@@ -183,68 +183,5 @@ namespace DrawingGeometryForms
             figures.Remove(figure);
             RefreshScene();
         }
-
-
-
-
-        /*   Здесь был код для перемещения объектов кнопками, расположенными на канвасе
-        private void ClickUp(object sender, RoutedEventArgs e)
-        {
-            var dy = 15;
-            canvas.Children.Clear();
-            var figure = figures.FirstOrDefault(x => x.IsSelected);
-            if (figure == null)
-            {
-                return;
-            }
-            figure.CenterY -= dy;
-            figure.Draw(canvas, OnFigureMouseDown);
-            RefreshScene();
-        }
-
-
-        private void ClickDown(object sender, RoutedEventArgs e)
-        {
-            var dy = 15;
-            canvas.Children.Clear();
-            var figure = figures.FirstOrDefault(x => x.IsSelected);
-            if (figure == null)
-            {
-                return;
-            }
-            figure.CenterY += dy;
-            figure.Draw(canvas, OnFigureMouseDown);
-            RefreshScene();
-        }
-
-        private void ClickLeft(object sender, RoutedEventArgs e)
-        {
-            var dx = 15;
-            canvas.Children.Clear();
-            var figure = figures.FirstOrDefault(x => x.IsSelected);
-            if (figure == null)
-            {
-                return;
-            }
-            figure.CenterX -= dx;
-            figure.Draw(canvas, OnFigureMouseDown);
-            RefreshScene();
-        }
-
-        private void ClickRight(object sender, RoutedEventArgs e)
-        {
-            var dx = 15;
-            canvas.Children.Clear();
-            var figure = figures.FirstOrDefault(x => x.IsSelected);
-            if (figure == null)
-            {
-                return;
-            }
-            figure.CenterX += dx;
-            figure.Draw(canvas, OnFigureMouseDown);
-            RefreshScene();
-        }
-        */
-
     }
 }

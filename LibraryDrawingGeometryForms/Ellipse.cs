@@ -18,7 +18,7 @@ namespace LibraryDrawingGeometryForms
                 Width = Math.Abs(Width),
                 Height = Math.Abs(Height),
             };
-            ellipse.Margin = new Thickness(LeftAngleX, LeftAngleY, 0, 0);
+            ellipse.Margin = new Thickness(UpperLeftAngleX, UpperLeftAngleY, 0, 0);
             ellipse.Stroke = new SolidColorBrush(LineColor.ToColor());
             ellipse.StrokeThickness = LineThickness + (IsSelected ? 2 : 0);
             ellipse.MouseLeftButtonDown += mouseDownEventHandler;

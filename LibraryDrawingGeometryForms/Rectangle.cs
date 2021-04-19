@@ -20,7 +20,7 @@ namespace LibraryDrawingGeometryForms
                 Width = Math.Abs(Width),
                 Height = Math.Abs(Height),
             };
-            rectangle.Margin = new Thickness(LeftAngleX, LeftAngleY, 0, 0);
+            rectangle.Margin = new Thickness(UpperLeftAngleX, UpperLeftAngleY, 0, 0);
             rectangle.Stroke = new SolidColorBrush(LineColor.ToColor());
             rectangle.StrokeThickness = LineThickness + (IsSelected ? 2 : 0);
             rectangle.MouseLeftButtonDown += mouseDownEventHandler;  // подписываем к событию
