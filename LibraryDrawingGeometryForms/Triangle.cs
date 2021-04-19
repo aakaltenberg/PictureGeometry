@@ -8,7 +8,7 @@ namespace LibraryDrawingGeometryForms
 {
     public class Triangle : BaseFigure
     {
-        public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler)
+        public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler)
         {
             ClearShapes(mouseDownEventHandler);
 
@@ -23,6 +23,7 @@ namespace LibraryDrawingGeometryForms
             lineAB.Stroke = new SolidColorBrush(LineColor.ToColor());
             lineAB.StrokeThickness = LineThickness + selectedThickness;
             lineAB.MouseLeftButtonDown += mouseDownEventHandler;
+            lineAB.MouseLeftButtonUp += mouseUpEventHandler;
             shapes.Add(lineAB);
             canvas.Children.Add(lineAB);
 
@@ -35,6 +36,7 @@ namespace LibraryDrawingGeometryForms
             lineBC.Stroke = new SolidColorBrush(LineColor.ToColor());
             lineBC.StrokeThickness = LineThickness + selectedThickness;
             lineBC.MouseLeftButtonDown += mouseDownEventHandler;
+            lineBC.MouseLeftButtonUp += mouseUpEventHandler;
             shapes.Add(lineBC);
             canvas.Children.Add(lineBC);
 
@@ -47,6 +49,7 @@ namespace LibraryDrawingGeometryForms
             lineAC.Stroke = new SolidColorBrush(LineColor.ToColor());
             lineAC.StrokeThickness = LineThickness+ selectedThickness;
             lineAC.MouseLeftButtonDown += mouseDownEventHandler;
+            lineAC.MouseLeftButtonUp += mouseUpEventHandler;
             shapes.Add(lineAC); // при отрисовке фигуры закидываем в лист шэйп три объекта - (lineAB, lineBC, lineAC)
             canvas.Children.Add(lineAC);
         }

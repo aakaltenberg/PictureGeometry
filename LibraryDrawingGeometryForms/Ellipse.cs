@@ -8,7 +8,7 @@ namespace LibraryDrawingGeometryForms
 {
     public class Ellipse : BaseFigure
     {
-        public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler)
+        public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler)
         {
             ClearShapes(mouseDownEventHandler);
 
@@ -22,6 +22,7 @@ namespace LibraryDrawingGeometryForms
             ellipse.Stroke = new SolidColorBrush(LineColor.ToColor());
             ellipse.StrokeThickness = LineThickness + (IsSelected ? 2 : 0);
             ellipse.MouseLeftButtonDown += mouseDownEventHandler;
+            ellipse.MouseLeftButtonUp += mouseUpEventHandler;
             shapes.Add(ellipse); // при отрисовке фигуры в лист шейп закидываем объект эллипс
             canvas.Children.Add(ellipse);
         }

@@ -28,6 +28,6 @@ namespace LibraryDrawingGeometryForms
         bool IsSelected { get; set; }
 
         bool HasShape(Shape shape);
-        void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler);
+        void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler);
     }
 }

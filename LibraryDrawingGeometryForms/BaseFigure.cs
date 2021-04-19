@@ -18,7 +18,7 @@ namespace LibraryDrawingGeometryForms
         public double LineThickness { get; set; } = 5;
         public bool IsSelected { get; set; }
 
-        public abstract void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler);
+        public abstract void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler);
         public bool HasShape(Shape shape)
         {
             return shapes.Contains(shape); //возвращает true, если входящий объект, принадлежащий

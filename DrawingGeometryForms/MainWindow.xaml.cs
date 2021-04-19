@@ -27,6 +27,8 @@ namespace DrawingGeometryForms
     public partial class MainWindow : Window
     {
         private List<IFigure> figures = new List<IFigure>();
+        public double dx;
+        public double dy;
 
         public List<string> AvailableFigures => new List<string> { "rectangle", "ellipse", "triangle" }; //для списка figures
         public string SelectedFigureString { get; set; }
@@ -65,19 +67,9 @@ namespace DrawingGeometryForms
             canvas.Children.Clear();
             foreach (var figure in figures)
             {
-                figure.Draw(canvas, OnFigureMouseDown);
+                figure.Draw(canvas, OnFigureMouseDown, DrawingFigureLeftButtonUp);
             }
         }
-
-        private void DrawingFigureMoveMouse(object sender, MouseEventArgs e)
-        {
-            var figure = figures.Last();
-                figure.Height = e.GetPosition(canvas).Y - figure.UpperLeftAngleY;
-                figure.Width = e.GetPosition(canvas).X - figure.UpperLeftAngleX;
-            RefreshScene();
-            e.Handled = true;
-        }
-
         private void ClickOnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
             // обработчик нажатия ЛКМ на канвас => рисует выбранную фигуру с дефолтными пропертями из BaseFigure
         {
@@ -113,15 +105,25 @@ namespace DrawingGeometryForms
                     };
                     break;
             }
-            figure.Draw(canvas, OnFigureMouseDown);
+            figure.Draw(canvas, OnFigureMouseDown, DrawingFigureLeftButtonUp);
             figures.Add(figure);
             canvas.MouseMove += DrawingFigureMoveMouse;
             canvas.MouseLeftButtonUp += DrawingFigureLeftButtonUp;
+        }
+        private void DrawingFigureMoveMouse(object sender, MouseEventArgs e)
+        {
+            var figure = figures.Last();
+            figure.Height = e.GetPosition(canvas).Y - figure.UpperLeftAngleY;    
+            figure.Width = e.GetPosition(canvas).X - figure.UpperLeftAngleX;
+            RefreshScene();
+            e.Handled = true;
         }
 
         private void DrawingFigureLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             canvas.MouseMove -= DrawingFigureMoveMouse;
+            canvas.MouseMove -= OnSelectedFigureMouseMove;
+            canvas.PreviewMouseLeftButtonUp -= DrawingFigureLeftButtonUp;
         }
 
         private void OnFigureMouseDown(object sender, MouseButtonEventArgs e)  // создание обработчика события
@@ -137,22 +139,17 @@ namespace DrawingGeometryForms
                                                    // объект (может быть часть фигуры, например, линия)
                 {
                     figure.IsSelected = true;
+                    dx = (double)figure.UpperLeftAngleX  - (double)e.GetPosition(canvas).X;
+                    dy = (double)figure.UpperLeftAngleY - (double)e.GetPosition(canvas).Y;
                 }
             }
             RefreshScene();
             canvas.MouseMove += OnSelectedFigureMouseMove;
-            canvas.MouseLeftButtonUp += OnSelectedFigureMouseUp;
+            canvas.MouseLeftButtonUp += DrawingFigureLeftButtonUp;
             e.Handled = true; //говорит программе, что событие совершилось, дальше можно не идти по обработчикам
                               //объекты на канвасе идут слоями, children находятся
                               //выше по условной апликате и обрабатываются первыми обычно
                               //что-то вроде break
-        }
-
-        private void OnSelectedFigureMouseUp(object sender, MouseButtonEventArgs e)
-            // При поднятии мыши отписываем соответствующие обработчики
-        {
-            canvas.MouseMove -= OnSelectedFigureMouseMove;
-            canvas.MouseLeftButtonUp -= OnSelectedFigureMouseUp;
         }
 
         private void OnSelectedFigureMouseMove(object sender, MouseEventArgs e)
@@ -160,8 +157,8 @@ namespace DrawingGeometryForms
         {
             foreach (var figure in figures.Where(x => x.IsSelected))
             {
-                figure.UpperLeftAngleX = e.GetPosition(canvas).X;
-                figure.UpperLeftAngleY = e.GetPosition(canvas).Y;
+                figure.UpperLeftAngleX = e.GetPosition(canvas).X + dx;
+                figure.UpperLeftAngleY = e.GetPosition(canvas).Y + dy;
 
             }
             RefreshScene();

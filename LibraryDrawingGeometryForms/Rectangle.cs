@@ -9,7 +9,7 @@ namespace LibraryDrawingGeometryForms
 {
     public class Rectangle : BaseFigure, IFigure
     {
-        public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler) //override позволяет переопределить метод,
+        public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler) //override позволяет переопределить метод,
                                                                                                 //который определен в абстрактном классе
         {
             ClearShapes(mouseDownEventHandler);
@@ -26,6 +26,7 @@ namespace LibraryDrawingGeometryForms
             rectangle.MouseLeftButtonDown += mouseDownEventHandler;  // подписываем к событию
                                                                      // метод(обработчик события) через
                                                                      // делегат MouseButtonEventHandler
+            rectangle.MouseLeftButtonUp += mouseUpEventHandler;
             shapes.Add(rectangle);  // при отрисовке фигуры закидываем в лист shapes объект rectangle
             canvas.Children.Add(rectangle);
         }
