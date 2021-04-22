@@ -18,6 +18,8 @@ namespace LibraryDrawingGeometryForms
 {
     public interface IFigure
     {
+        public double dx { get; set; }
+        public double dy { get; set; }
         double Height { get; set; }
         double Width { get; set; }
         double UpperLeftAngleX { get; set; }

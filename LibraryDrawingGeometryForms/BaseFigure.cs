@@ -10,6 +10,8 @@ namespace LibraryDrawingGeometryForms
     public abstract class BaseFigure : IFigure
     {
         protected List<Shape> shapes = new List<Shape>();
+        public double dx { get; set; }
+        public double dy { get; set; }
         public double Height { get; set; } = 0;
         public double Width { get; set; } = 0;
         public double UpperLeftAngleX { get; set; } = 200;

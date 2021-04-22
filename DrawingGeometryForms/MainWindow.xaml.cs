@@ -27,8 +27,6 @@ namespace DrawingGeometryForms
     public partial class MainWindow : Window
     {
         private List<IFigure> figures = new List<IFigure>();
-        public double dx;
-        public double dy;
 
         public List<string> AvailableFigures => new List<string> { "rectangle", "ellipse", "triangle" }; //для списка figures
         public string SelectedFigureString { get; set; }
@@ -134,13 +132,26 @@ namespace DrawingGeometryForms
                                                // видимо, просто ради удобочитаемого названия, явно прописываем тип объекта
             foreach (var figure in figures)
             {
-                figure.IsSelected = false;
-                if (figure.HasShape(clickedShape)) // содержиться ли в листе shapes выделенный
-                                                   // объект (может быть часть фигуры, например, линия)
+                if (Keyboard.IsKeyDown(Key.LeftShift))
                 {
-                    figure.IsSelected = true;
-                    dx = (double)figure.UpperLeftAngleX  - (double)e.GetPosition(canvas).X;
-                    dy = (double)figure.UpperLeftAngleY - (double)e.GetPosition(canvas).Y;
+                    if (figure.HasShape(clickedShape)) // содержиться ли в листе shapes выделенный
+                                                       // объект (может быть часть фигуры, например, линия)
+                    {
+                        figure.IsSelected = true;
+                        figure.dx = (double)figure.UpperLeftAngleX - (double)e.GetPosition(canvas).X;
+                        figure.dy = (double)figure.UpperLeftAngleY - (double)e.GetPosition(canvas).Y;
+                    }
+                }
+                else
+                {
+                    figure.IsSelected = false;
+                    if (figure.HasShape(clickedShape)) // содержиться ли в листе shapes выделенный
+                                                       // объект (может быть часть фигуры, например, линия)
+                    {
+                        figure.IsSelected = true;
+                        figure.dx = (double)figure.UpperLeftAngleX - (double)e.GetPosition(canvas).X;
+                        figure.dy = (double)figure.UpperLeftAngleY - (double)e.GetPosition(canvas).Y;
+                    }
                 }
             }
             RefreshScene();
@@ -157,8 +168,8 @@ namespace DrawingGeometryForms
         {
             foreach (var figure in figures.Where(x => x.IsSelected))
             {
-                figure.UpperLeftAngleX = e.GetPosition(canvas).X + dx;
-                figure.UpperLeftAngleY = e.GetPosition(canvas).Y + dy;
+                figure.UpperLeftAngleX = e.GetPosition(canvas).X + figure.dx;
+                figure.UpperLeftAngleY = e.GetPosition(canvas).Y + figure.dy;
 
             }
             RefreshScene();
@@ -179,6 +190,15 @@ namespace DrawingGeometryForms
             var figure = figures.FirstOrDefault(x => x.IsSelected);
             figures.Remove(figure);
             RefreshScene();
+        }
+
+        private void ClickStartChaos(object sender, RoutedEventArgs e)
+        {
+            var random = new Random();
+            foreach (var figure in figures)
+            {
+                figure.UpperLeftAngleX += random.Next(10);
+            }
         }
     }
 }
