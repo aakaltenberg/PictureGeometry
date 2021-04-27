@@ -14,8 +14,8 @@
             <Button x:Name="Delete" Content="Delete" Canvas.Left="172" Height="28" Width="102" Click="ClickDeleteFigure" Canvas.Top="-1"/>
             <ComboBox x:Name="FigureColorsControl"  ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorString, Mode=TwoWay}" Text="Select color" Height="27" Width="82"/>
             <ComboBox x:Name="NameFigures" ItemsSource="{Binding AvailableFigures}" SelectedItem="{Binding SelectedFigureString, Mode=TwoWay}" Text="Select figure" Height="27" Canvas.Left="82" Width="90"/>
-            <Button x:Name="Delete_Copy" Content="Start" Canvas.Left="274" Height="28" Width="68" Click="ClickStartChaos"/>
-            <Button x:Name="Delete_Copy1" Content="Stop" Canvas.Left="342" Height="28" Width="60" Click="ClickDeleteFigure"/>
+            <Button x:Name="btnStart" Canvas.Left="274" Height="28" Width="68" Content="Start" Click="StartBtn"/>
+            <Button x:Name="btnStop" Content="Stop" Canvas.Left="342" Height="28" Width="60" Click="StopBtn" Canvas.Top="-1"/>
         </Canvas>
     </Grid>
 </Window>

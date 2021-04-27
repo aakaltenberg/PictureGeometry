@@ -8,10 +8,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using IFigure = LibraryDrawingGeometryForms.IFigure;
 using Ellipse = LibraryDrawingGeometryForms.Ellipse;
@@ -26,6 +28,8 @@ namespace DrawingGeometryForms
     /// </summary>
     public partial class MainWindow : Window
     {
+        double dx = 1;
+        double dy = 1;
         private List<IFigure> figures = new List<IFigure>();
 
         public List<string> AvailableFigures => new List<string> { "rectangle", "ellipse", "triangle" }; //для списка figures
@@ -58,6 +62,39 @@ namespace DrawingGeometryForms
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            var figure = figures.Last();
+            if (figure.UpperLeftAngleY + figure.Height >= canvas.Height)
+            {
+                dy = -dy;
+            }
+            if (figure.UpperLeftAngleX + figure.Width >= canvas.Width)
+            {
+                dx = -dx;
+            }
+            if (figure.UpperLeftAngleX <= 0)
+            {
+                dx = -dx;
+            }
+            if (figure.UpperLeftAngleY <= 0)
+            {
+                dy = -dy;
+            }
+            Random rnd = new Random();
+            int rndMoving = rnd.Next(1, 3);
+            switch (rndMoving)
+            {
+                case 1:
+                    figure.UpperLeftAngleX += dx;
+                    break;
+                case 2:
+                    figure.UpperLeftAngleY += dy;
+                    break;
+            }
+            RefreshScene();
         }
         private void RefreshScene()
             // заново отрисовываем все фигуры
@@ -192,13 +229,16 @@ namespace DrawingGeometryForms
             RefreshScene();
         }
 
-        private void ClickStartChaos(object sender, RoutedEventArgs e)
+        private void StartBtn(object sender, RoutedEventArgs e)
         {
-            var random = new Random();
-            foreach (var figure in figures)
-            {
-                figure.UpperLeftAngleX += random.Next(10);
-            }
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Tick += timer_Tick;
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 25);
+            timer.Start();
         }
+        private void StopBtn(object sender, RoutedEventArgs e)
+        {
+        }
+        
     }
 }
