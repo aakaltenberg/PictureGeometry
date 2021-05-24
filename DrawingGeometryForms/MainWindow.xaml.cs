@@ -28,15 +28,25 @@ namespace DrawingGeometryForms
     /// </summary>
     public partial class MainWindow : Window
     {
-        double dx = 1;
-        double dy = 1;
-        private List<IFigure> figures = new List<IFigure>();
-
-        public List<string> AvailableFigures => new List<string> { "rectangle", "ellipse", "triangle" }; //для списка figures
         public string SelectedFigureString { get; set; }
-
-        public List<string> AvailableColors => new List<string> { "Black", "Blue", "Red", "Green", "Yellow" };  //для списка colors
         public string SelectedColorString { get; set; }
+        int index { get; set; }
+
+        /// <summary>
+        /// Лист, содержащий фигуры, созданных на основе интерфейса IFigure
+        /// </summary>
+        private List<IFigure> figures = new List<IFigure>();
+        
+        /// <summary>
+        /// Лист доступных фигур для скролящегося поля
+        /// </summary>
+        public List<string> AvailableFigures => new List<string> { "rectangle", "ellipse", "triangle" }; //для списка figures
+        
+        /// <summary>
+        /// Лист доступных цветов для скролящегося поля
+        /// </summary>
+        public List<string> AvailableColors => new List<string> { "Black", "Blue", "Red", "Green", "Yellow" };  //для списка colors
+        
         public FigureColor SelectedColor
         {
             get
@@ -64,40 +74,91 @@ namespace DrawingGeometryForms
             InitializeComponent();
         }
 
+        private void CheckCrash()
+        {
+            for (int i = 0; i < figures.Count; i++)
+            {
+                IFigure figure = figures[i];
+                for (int j = i + 1; j < figures.Count -1; j++)
+                {
+                    IFigure figure2 = figures[j];
+                    if (CheckCrash(figure, figure2))
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+
+        private bool CheckCrash(IFigure figure1, IFigure figure2)
+        {
+            if (figure1 == figure2)
+            {
+                return false;
+            }
+            for (int i = 0; i < figure2.ShapeCircleX.Count; i++)
+            {
+                for (int j = 0; j < figure1.ShapeCircleX.Count; j++)
+                {
+                    if (figure2.ShapeCircleX[i] == figure1.ShapeCircleX[j])
+                    {
+                        if (figure2.ShapeCircleY[i] == figure1.ShapeCircleY[j])
+                        {
+                            figure1.dx = -figure1.dx;
+                            figure2.dx = -figure2.dx;
+                            figure1.dy = -figure1.dy;
+                            figure2.dy = -figure2.dy;
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Метод для смещение фигуы на 1 пиксель каждый тик
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer_Tick(object sender, EventArgs e)
         {
-            var figure = figures.Last();
-            if (figure.UpperLeftAngleY + figure.Height >= canvas.Height)
+            CheckCrash();
+            
+            foreach (var figure in figures)
             {
-                dy = -dy;
+                if (figure.UpperLeftAngleX + figure.Width == canvas.Width)
+                {
+                    figure.dx = -figure.dx;
+                    figure.UpperLeftAngleX += figure.dx;
+                }
+                else if (figure.UpperLeftAngleY + figure.Height == canvas.Height)
+                {
+                    figure.dy = -figure.dy;
+                    figure.UpperLeftAngleY += figure.dy;
+                }
+                else if (figure.UpperLeftAngleX == 0)
+                {
+                    figure.dx = -figure.dx;
+                    figure.UpperLeftAngleX += figure.dx;
+                }
+                else if (figure.UpperLeftAngleY == 0)
+                {
+                    figure.dy = -figure.dy;
+                    figure.UpperLeftAngleY += figure.dy;
+                }
+                
+                figure.UpperLeftAngleX += figure.dx;
+                figure.UpperLeftAngleY += figure.dy;
+                RefreshScene();
+                figure.RefreshShapeCircleXY();
             }
-            if (figure.UpperLeftAngleX + figure.Width >= canvas.Width)
-            {
-                dx = -dx;
-            }
-            if (figure.UpperLeftAngleX <= 0)
-            {
-                dx = -dx;
-            }
-            if (figure.UpperLeftAngleY <= 0)
-            {
-                dy = -dy;
-            }
-            Random rnd = new Random();
-            int rndMoving = rnd.Next(1, 3);
-            switch (rndMoving)
-            {
-                case 1:
-                    figure.UpperLeftAngleX += dx;
-                    break;
-                case 2:
-                    figure.UpperLeftAngleY += dy;
-                    break;
-            }
-            RefreshScene();
         }
+
+        /// <summary>
+        /// Стираем всё с канваса, заново отрисовываем
+        /// </summary>
         private void RefreshScene()
-            // заново отрисовываем все фигуры
         {
             canvas.Children.Clear();
             foreach (var figure in figures)
@@ -105,8 +166,13 @@ namespace DrawingGeometryForms
                 figure.Draw(canvas, OnFigureMouseDown, DrawingFigureLeftButtonUp);
             }
         }
+
+        /// <summary>
+        /// обработчик нажатия ЛКМ на канвас => рисует выбранную фигуры с дефолтными пропертями из BaseFigure
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickOnCanvasMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-            // обработчик нажатия ЛКМ на канвас => рисует выбранную фигуру с дефолтными пропертями из BaseFigure
         {
             IFigure figure = null;
             switch (SelectedFigureString)
@@ -145,6 +211,12 @@ namespace DrawingGeometryForms
             canvas.MouseMove += DrawingFigureMoveMouse;
             canvas.MouseLeftButtonUp += DrawingFigureLeftButtonUp;
         }
+
+        /// <summary>
+        /// изменение пропертей фигуры при зажатой мышке во время отрисовки
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DrawingFigureMoveMouse(object sender, MouseEventArgs e)
         {
             var figure = figures.Last();
@@ -154,6 +226,11 @@ namespace DrawingGeometryForms
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Отработка поднятия ЛКМ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DrawingFigureLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             canvas.MouseMove -= DrawingFigureMoveMouse;
@@ -161,6 +238,12 @@ namespace DrawingGeometryForms
             canvas.PreviewMouseLeftButtonUp -= DrawingFigureLeftButtonUp;
         }
 
+
+        /// <summary>
+        /// Обработка события опускания ЛКМ на фигуру
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnFigureMouseDown(object sender, MouseButtonEventArgs e)  // создание обработчика события
                                                                                // нажатия мышки на фигуру
         {
@@ -200,8 +283,12 @@ namespace DrawingGeometryForms
                               //что-то вроде break
         }
 
+        /// <summary>
+        /// Перемещение выбранной фигуры по типу преследования курсора мыши
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSelectedFigureMouseMove(object sender, MouseEventArgs e)
-            // перемещение выбранной фигуры по типу преследования курсора мыши
         {
             foreach (var figure in figures.Where(x => x.IsSelected))
             {
@@ -211,6 +298,12 @@ namespace DrawingGeometryForms
             }
             RefreshScene();
         }
+
+        /// <summary>
+        /// Снятие всех выделений при ПКМ на канвас
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RightMouseOnCanvas(object sender, MouseButtonEventArgs e)
         {
             var figure = figures.FirstOrDefault(x => x.IsSelected);
@@ -222,6 +315,12 @@ namespace DrawingGeometryForms
 
             RefreshScene();
         }
+
+        /// <summary>
+        /// Обработчик кнопки удаления фигуры
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClickDeleteFigure(object sender, RoutedEventArgs e)
         {
             var figure = figures.FirstOrDefault(x => x.IsSelected);
@@ -229,16 +328,29 @@ namespace DrawingGeometryForms
             RefreshScene();
         }
 
-        private void StartBtn(object sender, RoutedEventArgs e)
+        public DispatcherTimer timer = new DispatcherTimer();
+
+        /// <summary>
+        /// Обработчик кнопки запуска самопроизвольного движения всех фигур
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void StartBtn(object sender, RoutedEventArgs e)
         {
-            DispatcherTimer timer = new DispatcherTimer();
             timer.Tick += timer_Tick;
             timer.Interval = new TimeSpan(0, 0, 0, 0, 25);
             timer.Start();
         }
+
+        /// <summary>
+        /// Обработчик кнопки остановки движения фигур по канвасу
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StopBtn(object sender, RoutedEventArgs e)
         {
+            timer.Tick -= timer_Tick;
+            timer.Stop();
         }
-        
     }
 }

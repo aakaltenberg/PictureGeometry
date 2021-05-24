@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,12 +8,11 @@ using System.Windows.Media;
 
 namespace LibraryDrawingGeometryForms
 {
-    public class Ellipse : BaseFigure
+    public class Ellipse : BaseFigure, IFigure
     {
         public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler)
         {
             ClearShapes(mouseDownEventHandler);
-
             System.Windows.Shapes.Ellipse ellipse;
             ellipse = new System.Windows.Shapes.Ellipse
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,11 @@ namespace LibraryDrawingGeometryForms
         double LineThickness { get; set; }
 
         bool IsSelected { get; set; }
+        public List<int> ShapeCircleX { get; set; }
+        public List<int> ShapeCircleY { get; set; }
 
         bool HasShape(Shape shape);
+        void RefreshShapeCircleXY();
         void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler);
     }
 }

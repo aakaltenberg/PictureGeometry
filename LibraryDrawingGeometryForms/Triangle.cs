@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace LibraryDrawingGeometryForms
 {
-    public class Triangle : BaseFigure
+    public class Triangle : BaseFigure, IFigure
     {
         public override void Draw(Canvas canvas, MouseButtonEventHandler mouseDownEventHandler, MouseButtonEventHandler mouseUpEventHandler)
         {
